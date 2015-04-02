@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title>Master Lock Crack</title>
+		<meta name='author' content='Josh Gibbs' />
+		<script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount', 'UA-31002145-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+		<script language='JavaScript' type='text/javascript'>
+			//var input = ['1', '4', '7.5', '10.5', '14', '17.5', '20.5', '24', '27.5', '30.5', '34', '37.5']
+			//var input = ['4', '14', '24', '27', '34']
+			function init() {
+				var X = 0,
+					input = document.getElementById('in').value.split(/\r?\n?\s/g),
+					S = [],
+					startTime = new Date().getTime(),
+					max, min;
+
+					//CHECK_0
+					if ( input.length < 5 ) {
+						alert('Your input shuold consist of at least five numbers.');
+						return;
+					};
+
+					//array to float
+					for (var i = 0; i < input.length; i++) {
+						input[i] = parseFloat(input[i]);
+					};
+
+					//sets the max number
+					max = input.sort( function( a, b ) { return a - b } )[input.length-1];
+					
+					//removes decimals
+					for (var i = 0; i < input.length; i++) {
+						if ( input[ i ] != parseInt( input[ i ] ) ) {
+							input.splice( i--, 1 );
+						};
+					};
+
+					//removes duplicates from array
+					for (var i = 1; i < input.length; i++) {
+						if ( ( input[ i ] + '' ).substr( -1 ) == ( input[ i -1 ] + '' ).substr( -1 ) ) {
+							input.splice(--i,2);
+						};
+					};
+					if ( input.length == 3 ) {
+						input = input[ 1 ];
+					} else if ( input.length != 1 ) {
+						//CHECK_1
+						alert('Could not find the odd man out. Try again.');
+						return;
+					};
+
+					//finds all possible digits
+					var first = [],
+					 	second = [],
+					 	third = input,
+						min = input % 4;
+					for (var i = 0; min + i <= max+min+2; i+=4) {
+						first.push( min + i );
+						if ( min + 2 + i != third + 2 && min + 2 + i != third - 2 ) {
+							second.push( min + 2 + i );
+						};
+					};
+
+					//outputs combinations
+					for (var i = 0; i < first.length; i++) {
+						for (var j = 0; j < second.length; j++) {
+							S += 'Case #' + ++X + ': ' + first[ i ] + ' ' + second[ j ] + ' ' + third + '\n';
+						};
+					};
+
+				document.getElementById('out').innerText = S;
+				document.getElementById('outtime').innerText = 'Output - ' + ( new Date().getTime() - startTime ) + 'ms'; 
+
+			};
+		
+		</script>
+	</head>
+	<body>
+		Input
+		<input type='button' value='Solve' onclick="init()">
+		<br>
+		<textarea id='in'></textarea>
+		<hr>
+		<div id='outtime'>Output - 0ms</div>
+		<br>
+		<code id='out'></code>
+	</body>
+</html>
